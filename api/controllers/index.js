@@ -43,7 +43,7 @@ router.post('/course', async (req, res) => {
   const data = await dbService.updateData(utilData);
   res.send({
     cID: reqBody.courseID,
-    coursesData: utilData,
+    coursesData: utilData
   });
 });
 
