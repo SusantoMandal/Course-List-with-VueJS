@@ -1,27 +1,23 @@
 const AWS = require('aws-sdk');
 
-const BUCKET_NAME = 'test-bucket-susanto';
-const KEY_NAME = 'susanto-aws/course-list/course.json';
-const s3 = new AWS.S3({});
+AWS.config.region = 'eu-west-2';
+const lambda = new AWS.Lambda();
 
 async function getData() {
   const params = {
-    Bucket: BUCKET_NAME,
-    Key: KEY_NAME,
+    FunctionName: 'training-connect-s3',
   };
-  const data = await s3.getObject(params).promise();
-  const utilData = JSON.parse(data.Body);
-  return utilData;
+  const request = await lambda.invoke(params, () => {}).promise();
+  return request;
 }
 
 async function writeData(utilData) {
   const params = {
-    Bucket: BUCKET_NAME,
-    Key: KEY_NAME,
-    Body: JSON.stringify(utilData),
+    FunctionName: 'training-upload-s3',
+    Payload: Buffer.from(JSON.stringify(utilData)),
   };
-  const data = await s3.upload(params).promise();
-  return data;
+  const request = await lambda.invoke(params, () => {}).promise();
+  return request;
 }
 
 module.exports = {

@@ -13,19 +13,22 @@ router.get('/', (req, res) => {
 });
 
 router.get('/course', async (req, res) => {
-  const utilData = await dbService.fetchData();
+  const { Payload } = await dbService.fetchData();
+  const utilData = JSON.parse(Payload);
   res.send(utilData);
 });
 
 router.get('/course/:courseID', async (req, res) => {
-  const utilData = await dbService.fetchData();
+  const { Payload } = await dbService.fetchData();
+  const utilData = JSON.parse(Payload);
   const present = utilData.find((c) => c.courseID === req.params.courseID);
   res.send(present);
 });
 
 router.post('/course', async (req, res) => {
   const date = new Date();
-  const utilData = await dbService.fetchData();
+  const { Payload } = await dbService.fetchData();
+  const utilData = JSON.parse(Payload);
   const reqBody = req.body;
   if (utilData.length === 0) {
     reqBody.courseID = '0';
@@ -46,7 +49,8 @@ router.post('/course', async (req, res) => {
 
 router.put('/course/:courseID', async (req, res) => {
   const date = new Date();
-  const utilData = await dbService.fetchData();
+  const { Payload } = await dbService.fetchData();
+  const utilData = JSON.parse(Payload);
   const reqBody = req.body;
   const present = utilData.find((c) => c.courseID === req.params.courseID);
   present.courseName = reqBody.courseName;
@@ -57,7 +61,8 @@ router.put('/course/:courseID', async (req, res) => {
 });
 
 router.delete('/course/:courseID', async (req, res) => {
-  const utilData = await dbService.fetchData();
+  const { Payload } = await dbService.fetchData();
+  const utilData = JSON.parse(Payload);
   const present = utilData.find((c) => c.courseID === req.params.courseID);
   const index = utilData.indexOf(present);
   utilData.splice(index, 1);
