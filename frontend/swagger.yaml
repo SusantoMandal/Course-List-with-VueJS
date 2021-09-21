@@ -1,0 +1,90 @@
+openapi: 3.0.1
+info:
+  version: 0.0.1
+  title: Courses Table API
+  description: Definination of API Endpoints used in Courses Table project
+servers:
+- url: https://t1gfdux75h.execute-api.eu-west-2.amazonaws.com
+paths:
+  /test/courses:
+    get:
+      summary: Return all courses present in Database
+      description: This method returns all course details
+      parameters:
+        - name: ID
+          in: query
+          required: false
+          description: for getting specific course detail
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful Operation
+      x-amazon-apigateway-request-validator: validate-all
+    put:
+      summary: update course in the table
+      description: update the course in the database.
+      parameters:
+        - name: ID
+          in: query
+          required: true
+          description: for udating specific course detail
+          schema:
+            type: string
+      requestBody:
+        description: PUT body parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                courseName:
+                  type: string
+                subject:
+                  type: string
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Missing Required Paramters or invalid parameters
+      x-amazon-apigateway-request-validator: validate-all
+    post:
+      summary: Add course in the table
+      description: Add the course in the database.
+      requestBody:
+        description: POST body parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                courseName:
+                  type: string
+                subject:
+                  type: string
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Missing Required Paramters or invalid parameters
+      x-amazon-apigateway-request-validator: validate-all
+    delete:
+      summary: deleting course in the table
+      description: delete the course in the database.
+      parameters:
+        - name: ID
+          in: query
+          required: true
+          description: for removing specific course detail
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful Operation
+        '400':
+          description: Missing Required Paramters or invalid parameters
+      x-amazon-apigateway-request-validator: validate-all
+      
+      

@@ -1,4 +1,4 @@
-const apiEndPoint = 'http://localhost:5000/course/';
+const apiEndPoint = 'https://t1gfdux75h.execute-api.eu-west-2.amazonaws.com/test/courses';
 const course = {
   namespaced: true,
   state: {
@@ -13,14 +13,14 @@ const course = {
 
   actions: {
     async getData({ commit }, id) {
-      const res = await fetch(`${apiEndPoint}${id}`);
+      const res = await fetch(`${apiEndPoint}?ID=${id}`);
       const data = await res.json();
       commit('setCourseData', data);
     },
 
     async deleteCourse({ state }, id) {
       console.log(state);
-      await fetch(`${apiEndPoint}${id}`, {
+      await fetch(`${apiEndPoint}?ID=${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ const course = {
     },
 
     async updateCourse({ commit }, info) {
-      const res = await fetch(`${apiEndPoint}${info.id}`, {
+      const res = await fetch(`${apiEndPoint}?ID=${info.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

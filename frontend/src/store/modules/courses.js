@@ -1,4 +1,4 @@
-const apiEndPoint = 'http://localhost:5000/course';
+const apiEndPoint = 'https://t1gfdux75h.execute-api.eu-west-2.amazonaws.com/test/courses';
 const courses = {
   namespaced: true,
   state: {
@@ -26,9 +26,7 @@ const courses = {
         },
         body: JSON.stringify(payload),
       });
-      debugger;
       const data = await res.json();
-      debugger;
       commit('setCoursesData', data.coursesData);
     },
 
